@@ -5,12 +5,11 @@ import { Alert } from 'react-native';
 export const authenticate = async (mode, email, password) => {
   const url = `https://identitytoolkit.googleapis.com/v1/accounts:${mode}?key=${FIREBASE_KEY}`;
 
-  try {
-    const response = await axios.post(url, { email, password, returnedSecureToken: true });
-    return response.data.tokenId;
-  } catch (error) {
-    throw new Error(error.response.data.error.message);
-  }
+  const response = await axios.post(url, { email, password, returnedSecureToken: true });
+  console.log(response.data);
+  const token = response.data.idToken;
+  console.log(`tokenauthenticate = `, token);
+  return token;
 };
 
 export const createUser = (email, password) => {
@@ -23,7 +22,9 @@ export const createUser = (email, password) => {
 
 export const login = (email, password) => {
   try {
-    return authenticate('signInWithPassword', email, password);
+    const token = authenticate('signInWithPassword', email, password);
+    console.log(`tokenutils = `, token);
+    return token;
   } catch (error) {
     Alert.alert('Authentication failed!, Please check your login details');
   }

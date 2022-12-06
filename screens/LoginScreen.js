@@ -14,6 +14,7 @@ function LoginScreen() {
   const signInHandler = async ({ email, password }) => {
     setIsAuthenticating(true);
     const token = await login(email, password);
+    console.log('tokenlogin', token);
     authenticate(token);
     setIsAuthenticating(false);
   };
